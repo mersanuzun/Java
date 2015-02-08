@@ -1,0 +1,104 @@
+package tasKagitMakas;
+import com.sun.org.apache.xpath.internal.operations.Equals;
+import java.util.Scanner;
+import java.util.Random;
+/**
+ *
+ * @author Computer
+ */
+public class tasKagitMakas {
+    /**
+     * 
+     * @return String
+     */
+    public static String kullaniciGirdisi(){
+        // kullanıcıdan girdi alınır, numerik mi ve 3 den küçükmü bakılır
+        // sonra return ile döndürülür
+        Scanner sc = new Scanner(System.in);
+        String girdi="";
+        
+        do {
+            girdi=sc.nextLine();
+        }while (!Character.isDigit(girdi.charAt(0)) || (Integer.parseInt(girdi) > 3));
+        
+        return girdi;
+    }
+    /**
+     * 
+     * @return String
+     */
+   public static String bilgisayarSecimi(){
+       // bigisayar rastgele bir sayı üretir ve return ile döndürülür
+       // 1 2 3 den birini secmek istediğimiz için 0 olmadığı durum göz önüne alınır
+       Random rd = new Random();
+       String secim ="0";
+       
+       while (secim.equals("0")){
+            secim = Integer.toString(rd.nextInt(4));
+       }
+       
+       return secim;
+   }
+       /**
+        * 
+        * @param girdi
+        * @param secim
+        * @return String
+        */
+   public static String oyun(String girdi, String secim){
+       // dışarıdan kullanıcı girdisi ve bilgisayar seçimini paremetre olarak aldık
+       String sonuc = " ";
+       
+       switch (secim){ // makinanın seçimine göre bizim seçimi karşılaştırdık
+           case "1":{
+               if (girdi.equals("3")) // girdi 3 den farklı ise kazandık
+                   sonuc ="KAYBETTİNİZ, TAŞ MAKASI KIRAR.";
+               else
+                   sonuc = "KAZANDINIZ.";break;
+           }
+           case "2":{
+               if (girdi.equals("1")) // girdi 1 den farklı ise kazandık
+                   sonuc = "KAYBETTİNİZ, KAĞIT TAŞI SARAR.";
+                else
+                   sonuc = "KAZANDINIZ.";break;
+           }
+           case "3":{ 
+               if (girdi.equals("2")) // girdi 2 den farklıysa kazandık
+                   sonuc = "KAYBETTİNİZ, MAKAS KAĞIDI KESER";
+               else
+                   sonuc = "KAZANDINIZ.";break;
+           }
+       }
+       
+       return sonuc;
+   }
+   /**
+    * 
+    * @param secim
+    * @return String
+    */
+   public static String degerDondur(String secim){
+       String sonuc=" ";
+       switch (secim){
+           case "1": sonuc = "TAŞ";break;
+           case "2": sonuc = "KAĞIT";break;
+           case "3": sonuc = "MAKAS";break;
+       }
+       return sonuc;
+   }
+   
+   public static void main(String[] args){
+       String girdi=" ";
+       String secim=" ";
+       String sonuc=" ";
+       System.out.println("1 - TAŞ");
+       System.out.println("2 - KAĞIT");
+       System.out.println("3 - MAKAS");
+       System.out.println("Seçim yapınız...");
+       girdi = kullaniciGirdisi();
+       secim = bilgisayarSecimi();
+       sonuc=oyun(girdi,secim);
+       System.out.println("Bilgisayarın seçimi " + degerDondur(secim));
+       System.out.println(sonuc);
+   }
+}
