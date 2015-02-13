@@ -1,0 +1,105 @@
+package oyun;
+import java.util.Random;
+import java.util.Scanner;
+
+
+/**
+ *
+ * @author 7537
+ */
+
+class Dusmanlar{
+    private int guc;
+    private int can;
+    public void setGuc(int guc){
+        this.guc=guc;
+    }
+    public void setCan(int can){
+        this.can=can;
+    }
+    public int getCan(){
+        return this.can;
+    }
+    public int vurma(){
+        return this.guc;
+    }
+    public void vurulma(int kahramanGuc){
+        this.can=this.can-kahramanGuc;
+        if (this.can < 0)
+           this.can=0;
+    } 
+    public void bilgiVer(){
+        System.out.println("Dusmanın canı " + Integer.toString(this.can) + " gucu " + Integer.toString(this.guc));
+    }
+}
+
+class Kahraman{
+    private int guc;
+    private int can;
+    public void setGuc(int guc){
+        this.guc=guc;
+    }
+    public void setCan(int can){
+        this.can=can;
+    }
+    public int getCan(){
+        return this.can;
+    }
+    public int getGuc(){
+        return this.guc;
+    }
+    public int vurma(){
+        return this.guc;
+    }
+    public void vurulma(int dusmanGuc){
+        this.can=this.can-dusmanGuc;
+    } 
+    public void bilgiVer(){
+        System.out.println("Kahramanın canı " + Integer.toString(this.can) + " gucu " + Integer.toString(this.guc));
+    }
+}
+
+public class Oyun {
+    public static void main(String[] args){
+        Random rd = new Random();
+        Scanner sc = new Scanner(System.in);
+        int vuranDusmanNo; // kahramana vuran düşmanın indexini tutar
+        int vurulanDusmanNo; // kahramanın vurduğu düşmanın indexini tutat
+        // dusman karakterler oluşturuldu
+        Dusmanlar[] dusmanlar = new Dusmanlar[6];
+        for (int i=0; i < dusmanlar.length; i++){
+                dusmanlar[i]=new Dusmanlar();
+                dusmanlar[i].setCan(rd.nextInt(250));
+                dusmanlar[i].setGuc(rd.nextInt(50));
+            }
+        //kahraman olşturuldu
+        Kahraman kahraman = new Kahraman();
+        kahraman.setCan(100);
+        kahraman.setGuc(100);
+        // oyunun başladığı yer
+        while (kahraman.getCan() > 0){
+            
+            for (int i=0; i < dusmanlar.length; i++){
+                System.out.print(i+1 + ". ");
+                dusmanlar[i].bilgiVer();
+            }
+            kahraman.bilgiVer();
+            vuranDusmanNo=rd.nextInt(dusmanlar.length);
+            do{  // düşmanın ölü olup olmadığını kontol ediyoruz
+                System.out.print("Vurmak istediğiniz düşmanın numarasını yazınız ");
+                vurulanDusmanNo=sc.nextInt();
+                if ((dusmanlar[vurulanDusmanNo-1].getCan() == 0))
+                    System.out.println("Düşman ölü");
+            }while (!(dusmanlar[vurulanDusmanNo-1].getCan() > 0));
+            dusmanlar[vurulanDusmanNo-1].vurulma(kahraman.getGuc()); 
+            kahraman.vurulma(dusmanlar[vuranDusmanNo].vurma());
+            kahraman.bilgiVer();
+            System.out.println("Sizi vuran düşman " + (vuranDusmanNo+1));
+            System.out.println();
+            if (kahraman.getCan() < 0){
+                System.out.println("Kahraman öldü. Oyun bitti...");break;
+            }          
+            System.out.println();           
+        }  
+    }
+}
