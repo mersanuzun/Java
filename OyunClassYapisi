@@ -86,6 +86,7 @@ public class Oyun {
             kahraman.bilgiVer();
             vuranDusmanNo=rd.nextInt(dusmanlar.length);
             do{  // düşmanın ölü olup olmadığını kontol ediyoruz
+                System.out.println();   
                 System.out.print("Vurmak istediğiniz düşmanın numarasını yazınız ");
                 vurulanDusmanNo=sc.nextInt();
                 if ((dusmanlar[vurulanDusmanNo-1].getCan() == 0))
